@@ -9,8 +9,17 @@ puts "Escolha um numero entre 1 a 200"
 puts "Tentativa 1"
 @chute = gets
 puts "Você chutou #{@chute}"
-if @chute.to_i == @numeroSorteado
+
+
+
+@acertou = @chute.to_i == @numeroSorteado
+if @acertou
     puts "Acertou"
 else
-    puts "Errou"
+    @maior = @numeroSorteado > @chute.to_i
+        if @maior
+            puts 'Numero é maior'
+        else
+            puts "Numero é menor"
+        end
 end

@@ -11,7 +11,7 @@ def definirNumero
 end
 
 def pedeNumero(chutes, tentativa, limiteDeTentativas)
-    puts "\nTentativa " + tentativa.to_s + " de " + limiteDeTentativas.to_s
+    puts "\nTentativa #{tentativa} de " + limiteDeTentativas.to_s
     puts "Chutes até agora: " + chutes.to_s
     chute = gets.strip
     puts "Você chutou " + chute

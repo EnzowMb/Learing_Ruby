@@ -5,15 +5,16 @@ def boasVindas
 end
 
 def definirNumero
-    puts "Olá #{@name}Começaremos o jogo para você!"
+    puts "Olá #{@name}Começaremos o jogo para você!\n\n"
     puts "Escolha um numero entre 1 a 200"
     return numeroSorteado = 143
 end
 
-def pedeNumero(tentativa, limiteDeTentativas)
-    puts "Tentativa " + tentativa.to_s + " de " + limiteDeTentativas.to_s
+def pedeNumero(chutes, tentativa, limiteDeTentativas)
+    puts "\nTentativa " + tentativa.to_s + " de " + limiteDeTentativas.to_s
+    puts "Chutes até agora: " + chutes.to_s
     chute = gets
-    puts "Você chutou #{@chute}"
+    puts "Você chutou " + chute
     chute.to_i #não precisa por return se é na ultima linha!
 end
 
@@ -35,10 +36,13 @@ end
 boasVindas
 definirNumero
 sorteado = definirNumero
+chutes = []
+total_chute = 0
 limiteDeTentativas = 5
 
 for tentativa in 1..limiteDeTentativas
-chute = pedeNumero(tentativa, limiteDeTentativas)
+chute = pedeNumero(chutes, tentativa, limiteDeTentativas)
+chutes << chute #Coloca dentro no array na ultima opção -> <<
 break if verificaAcerto(chute, sorteado)
 
 end

@@ -5,7 +5,10 @@ class Livro
       @ano_lancamento = ano_lancamento
       @preco = calcula_preco(preco)
     end
-
+    
+    def to_csv
+      "#{@titulo},#{@ano_lancamento},#{@preco}"
+    end
 private
 
  def calcula_preco(base)
@@ -15,6 +18,7 @@ private
       base
     end
   end
+
 end
 
 def livro_para_newsletter(livro)
@@ -25,5 +29,42 @@ def livro_para_newsletter(livro)
     end
 end
 
+class Estoque
+    attr_reader :livros
+
+    def initialize
+        @livros = []
+    end
+
+    def adiciona(livro)
+        @livros << livro if livro
+    end
+
+    def mais_barato_que(valor)
+        @livros.select do |livros|
+          livros.preco <= valor
+        end
+    end
+    
+    def total
+        @livros.size
+    end
+
+    def exporta_csv
+        @livros.each do |livro|
+            puts livro.to_csv
+        end
+    end
+end
+
 algoritmos = Livro.new("Algoritmos", 100, 1998)
 livro_para_newsletter algoritmos
+estoque = Estoque.new
+estoque.adiciona(algoritmos)
+baratos = estoque.mais_barato_que(80)
+baratos.each do |livro|
+  puts livro.titulo
+end
+estoque.adiciona(Livro.new("Opa", 180, 1990))
+puts "Total de livros: #{estoque.total}"
+estoque.exporta_csv

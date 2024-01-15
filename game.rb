@@ -4,10 +4,27 @@ def boasVindas
     @name = gets.strip
 end
 
-def definirNumero
+def escolhaDificuldade
+    puts 'Escolha uma dificuldade entre 1(fácil) e 5(difícil)'
+    dificuldade = gets.to_i
+end
+
+def definirNumero(dificuldade)
+    case dificuldade
+    when 1
+        maximo = 30
+    when 2
+        maximo = 60
+    when 3
+        maximo = 90
+    when 4
+        maximo = 150
+    else
+        maximo = 200
+    end
     puts "Olá #{@name} começaremos o jogo para você!\n\n"
-    puts "Escolha um numero entre 1 a 200"
-    return numeroSorteado = 143
+    puts "Escolha um numero entre 1 a #{maximo}"
+    numero = rand(maximo) + 1
 end
 
 def pedeNumero(chutes, tentativa, limiteDeTentativas)
@@ -34,8 +51,8 @@ def verificaAcerto(chute, sorteado)
 end
 
 boasVindas
-definirNumero
-sorteado = definirNumero
+dificuldade = escolhaDificuldade
+sorteado = definirNumero(dificuldade)
 chutes = []
 total_chute = 0
 limiteDeTentativas = 5

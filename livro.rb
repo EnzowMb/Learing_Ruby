@@ -1,13 +1,18 @@
 class Livro
     attr_reader :titulo, :ano_lancamento, :preco
-    def initialize(titulo, preco, ano_lancamento)
+    def initialize(titulo, preco, ano_lancamento, possui_reimpressao)
       @titulo = titulo
       @ano_lancamento = ano_lancamento
       @preco = calcula_preco(preco)
+      @possui_reimpressao = possui_reimpressao
     end
     
     def to_csv
       "#{@titulo},#{@ano_lancamento},#{@preco}"
+    end
+
+    def possui_reimpressao?
+        @possui_reimpressao
     end
 private
 
@@ -57,7 +62,7 @@ class Estoque
     end
 end
 
-algoritmos = Livro.new("Algoritmos", 100, 1998)
+algoritmos = Livro.new("Algoritmos", 100, 1998, true)
 livro_para_newsletter algoritmos
 estoque = Estoque.new
 estoque.adiciona(algoritmos)
@@ -65,6 +70,9 @@ baratos = estoque.mais_barato_que(80)
 baratos.each do |livro|
   puts livro.titulo
 end
-estoque.adiciona(Livro.new("Opa", 180, 1990))
+estoque.adiciona(Livro.new("Opa", 180, 1990, false))
 puts "Total de livros: #{estoque.total}"
 estoque.exporta_csv
+estoque.livros.each do |livro|
+    puts "O livro #{livro.titulo} possui reimpressão? " + (livro.possui_reimpressao? ? "Sim" : "Não")
+end

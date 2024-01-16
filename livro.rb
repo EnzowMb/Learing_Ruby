@@ -34,11 +34,24 @@ def livro_para_newsletter(livro)
     end
 end
 
+module Contador
+    def << (livro)
+      push (livro)
+      if @maximo_necessario.nil? || @maximo_necessario < size
+        @maximo_necessario = size
+      end
+      self
+    end
+  
+    attr_reader :maximo_necessario
+  end
+
 class Estoque
     attr_reader :livros
 
     def initialize
         @livros = []
+        @livros.extend Contador
     end
 
     def adiciona(livro)
@@ -60,19 +73,31 @@ class Estoque
             puts livro.to_csv
         end
     end
+
+    def << (livro)
+        @livros << livro if livro
+        self
+    end
+    
+    def remove(livro)
+        @livros.delete livro
+    end
+    
+    def maximo_necessario
+        @livros.maximo_necessario
+    end
 end
 
-algoritmos = Livro.new("Algoritmos", 100, 1998, true)
-livro_para_newsletter algoritmos
 estoque = Estoque.new
-estoque.adiciona(algoritmos)
-baratos = estoque.mais_barato_que(80)
-baratos.each do |livro|
-  puts livro.titulo
-end
-estoque.adiciona(Livro.new("Opa", 180, 1990, false))
-puts "Total de livros: #{estoque.total}"
-estoque.exporta_csv
-estoque.livros.each do |livro|
-    puts "O livro #{livro.titulo} possui reimpressão? " + (livro.possui_reimpressao? ? "Sim" : "Não")
-end
+algoritmos = Livro.new("Opa", 10, 2021, true)
+arquitetura = Livro.new("Opa2", 10, 2021, true)
+programmer = Livro.new("Programmer", 10, 2020, true)
+estoque <<  algoritmos
+puts estoque.maximo_necessario
+estoque <<  arquitetura
+puts estoque.maximo_necessario
+estoque <<  programmer
+puts estoque.maximo_necessario
+
+estoque.remove(algoritmos)
+puts estoque.maximo_necessario
